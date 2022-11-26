@@ -1,4 +1,5 @@
 import { GetStaticProps} from 'next'
+import Head from 'next/head'
 import Link from 'next/link'
 import About from '../components/About'
 import ContactMe from '../components/ContactMe'
@@ -24,6 +25,9 @@ type Props = {
 const Home=({pageInfo, experience, projects, skills, socials}:Props) => {
   return (
     <div className="bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
+      <Head>
+        <title>{pageInfo?.name} - Portfolio</title>
+      </Head>
       <Header socials={socials}/>
 
       <section id="hero" className='snap-start'>
@@ -67,7 +71,7 @@ const Home=({pageInfo, experience, projects, skills, socials}:Props) => {
 
 export default Home;
 
-export const getStaticProps : GetStaticProps = async () => {
+export const getStaticProps : GetStaticProps<Props> = async () => {
   const pageInfo: PageInfo = await fetchPageInfo();
   const projects: Project[] = await fetchProjects();
   const socials: Social[] =  await fetchSocials();
