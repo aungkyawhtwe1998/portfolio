@@ -19,7 +19,7 @@ function ContactMe({ }: Props) {
     };
 
     return (
-        <div className='h-screen pt-24 relative flex overflow-hidden flex-col text-left max-w-full justify-evenly mx-auto items-center z-0'>
+        <div className='h-screen pt-24 relative flex flex-col text-left max-w-full space-y-4 mx-auto items-center z-0'>
             <h3 className='uppercase tracking-[20px] text-gray-500 text-2xl'>
                 Contact
             </h3>
@@ -42,7 +42,7 @@ function ContactMe({ }: Props) {
                 </div>
 
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col space-y-2 justify-center mx-auto'>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex px-5 flex-col space-y-2'>
                 <div className='flex space-x-2'>
                     <input
                         {...register('name')}
@@ -71,6 +71,7 @@ function ContactMe({ }: Props) {
                 <button type='submit' className='bg-[#F7AB0A] py-5 px-10 rounded-md text-black font-bold text-lg'>Submit</button>
 
             </form>
+            
         </div>
     )
 }
