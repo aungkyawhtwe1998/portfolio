@@ -1,5 +1,6 @@
 import { GetStaticProps} from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import About from '../components/About'
 import ContactMe from '../components/ContactMe'
@@ -57,9 +58,9 @@ const Home=({pageInfo, experience, projects, skills, socials}:Props) => {
       <Link href="#hero">
         <footer className='sticky bottom-5 w-full cursor-pointer'>
           <div className='flex items-center justify-center'>
-            <img
+            <Image
               className='h-10 w-10 rounded-full filter grayscale hover:grayscale-0 cursor-pointer'
-              src="https://i.imgur.com/e2yvD6A.png"
+              src={require('/upp-arrow.png')}
               alt=""
             />
           </div>
