@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Project } from "../typings";
 import { urlFor } from "../sanity";
 import useIntersectionObserver from "../hooks/useIntersectionObserver"; // Adjust the import path as needed
@@ -8,29 +8,40 @@ type Props = {
 };
 
 function Projects({ projects }: Props) {
+  // Create an array of refs for each project
+  const refs = useRef<(HTMLDivElement | null)[]>(Array(projects.length).fill(null));
+
+  // Use the intersection observer on the entire project list
+  const { ref: observerRef, isVisible } = useIntersectionObserver({
+    threshold: 0.5,
+  });
+
   return (
     <div className="min-h-screen relative flex overflow-hidden flex-col text-left md:flex-row max-w-full justify-evenly mx-auto items-center z-0">
       <h3 className="absolute top-24 uppercase tracking-[20px] text-grey text-2xl">
         Projects
       </h3>
-      <div className="w-full md:mt-0 gap-x-5 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-grey/20 scrollbar-thumb-primary/80">
+      <div
+        className="w-full md:mt-0 gap-x-5 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-grey/20 scrollbar-thumb-primary/80"
+        ref={observerRef} // Attach the observer ref here
+      >
         {projects.map((project, i) => {
-          const { ref, isVisible } = useIntersectionObserver({
-            threshold: 0.5,
-          });
+          // Assign the corresponding ref for each project
+          const projectRef = (el: HTMLDivElement) => {
+            refs.current[i] = el;
+          };
 
           return (
             <div
               key={project._id}
-              ref={ref}
+              ref={projectRef}
               className={`w-screen lg:w-1/2 p-5 flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center ${
                 isVisible ? "animate-fade-in" : ""
-              }`}>
+              }`}
+            >
               <img
                 className={`rounded-lg w-80 h-52 transition-transform duration-300 ${
-                  isVisible
-                    ? "translate-y-0 opacity-100"
-                    : "-translate-y-10 opacity-0"
+                  isVisible ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
                 }`}
                 src={urlFor(project.image).url()}
                 alt={project.title}
