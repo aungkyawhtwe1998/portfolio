@@ -42,5 +42,8 @@ vercel build
 
 vercel deploy --prebuilt
 
-vercel --prod
+vercel deploy --prod
 ```
+
+# Sanity Dashboard
+[https://aungkyawhtwe.sanity.studio/desk/project]

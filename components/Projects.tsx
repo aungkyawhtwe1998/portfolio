@@ -1,76 +1,80 @@
-import React, { useRef } from "react";
+"use client";
+import React from "react";
 import { Project } from "../typings";
 import { urlFor } from "../sanity";
-import useIntersectionObserver from "../hooks/useIntersectionObserver"; // Adjust the import path as needed
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import Image from "next/image";
 
 type Props = {
   projects: Project[];
 };
 
 function Projects({ projects }: Props) {
-  // Create an array of refs for each project
-  const refs = useRef<(HTMLDivElement | null)[]>(Array(projects.length).fill(null));
-
-  // Use the intersection observer on the entire project list
-  const { ref: observerRef, isVisible } = useIntersectionObserver({
-    threshold: 0.5,
-  });
-
   return (
-    <div className="min-h-screen relative flex overflow-hidden flex-col text-left md:flex-row max-w-full justify-evenly mx-auto items-center z-0">
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-grey text-2xl">
-        Projects
-      </h3>
-      <div
-        className="w-full md:mt-0 gap-x-5 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-grey/20 scrollbar-thumb-primary/80"
-        ref={observerRef} // Attach the observer ref here
-      >
-        {projects.map((project, i) => {
-          // Assign the corresponding ref for each project
-          const projectRef = (el: HTMLDivElement) => {
-            refs.current[i] = el;
-          };
-
-          return (
-            <div
-              key={project._id}
-              ref={projectRef}
-              className={`w-screen lg:w-1/2 p-5 flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center ${
-                isVisible ? "animate-fade-in" : ""
-              }`}
-            >
-              <img
-                className={`rounded-lg w-80 h-52 transition-transform duration-300 ${
-                  isVisible ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-                }`}
-                src={urlFor(project.image).url()}
-                alt={project.title}
-              />
-              <div className="space-y-5 px-0 md:px-10 max-w-6xl">
-                <h4 className="text-xl font-semibold text-center">
-                  <span className="underline decoration-primary/50">
-                    Case Study {i + 1} of {projects.length} :
-                  </span>
-                  <span className="ml-2">{project.title}</span>
-                </h4>
-                <div className="flex items-center space-x-2 justify-center">
-                  {project.technologies.map((tech) => (
-                    <img
-                      key={tech._id}
-                      src={urlFor(tech.image).url()}
-                      className="w-8 h-8"
-                      alt={tech.title}
-                    />
-                  ))}
+    <div className="px-5 lg:px-10 py-10 4xl:py-20 mx-auto max-w-[1920px] transition-opacity">
+      <div className="">
+        <h3 className="uppercase mb-10 text-center tracking-[20px] text-grey text-2xl">
+          Projects
+        </h3>
+        <Swiper
+          spaceBetween={20}
+          autoplay={{
+            delay: 3000, // Slide change delay in milliseconds
+            disableOnInteraction: false, // Keeps autoplay running after user interaction
+          }}
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 1.5 },
+            1920: { slidesPerView: 2 },
+          }}
+          navigation={true}
+          pagination={true}
+          history={{
+            key: "slide",
+          }}
+          modules={[Autoplay, Navigation, Pagination]}>
+          {projects?.map((project, i) => (
+            <SwiperSlide
+              key={i}
+              className="!pb-8 lg:!pb-14">
+              <div className="p-5 flex bg-accent text-dark rounded-lg xl:p-5 flex-col lg:flex-row gap-5 justify-center items-center">
+                <Image
+                  width={450}
+                  height={400}
+                  priority
+                  className="rounded-lg aspect-[450/400] max-w-[250px] md:max-w-[450px] bg-center object-cover"
+                  src={project.image && urlFor(project.image).url()}
+                  alt={project.title}
+                />
+                <div className="space-y-5 text-start 4xl:px-10">
+                  <div>
+                    <h4 className="text-xl font-semibold">
+                      Case Study {i + 1} of {projects.length}:
+                    </h4>
+                    <h4 className="text-xl font-semibold">{project.title}</h4>
+                  </div>
+                  <div className="flex items-center space-x-2 justify-start">
+                    {project.technologies.map((tech) => (
+                      <Image
+                        key={tech._id}
+                        src={tech.image && urlFor(tech.image).url()}
+                        className="w-6 h-6"
+                        width={24}
+                        height={24}
+                        alt={tech.title}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-sm md:text-lg text-left line-clamp-5">
+                    {project.summary}
+                  </p>
                 </div>
-
-                <p className="text-sm md:text-lg text-center md:text-left">
-                  {project.summary}
-                </p>
               </div>
-            </div>
-          );
-        })}
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <div className="w-full absolute top-[30%] bg-primary/5 left-0 h-[500px] -skew-y-12"></div>
     </div>

@@ -25,33 +25,34 @@ type Props = {
 }
 const Home=({pageInfo, experience, projects, skills, socials}:Props) => {
   return (
-    <div className="bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
+    // xl:h-screen xl:snap-y snap-mandatory 
+    <div className="bg-white text-dark overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-dark/80">
       <Head>
         <title>Aung Kyaw Htwe</title>
       </Head>
       <Header socials={socials}/>
 
-      <section id="hero" className='snap-start'>
+      <section id="hero" className=''>
         <Hero pageInfo={pageInfo}/>
       </section>
 
-      <section className='snap-center'>
+      <section className=''>
         <About pageInfo={pageInfo}/>
       </section>
 
-      <section id="experience" className='snap-center'>
+      <section id="experience" className=''>
         <WorkExperience experience={experience}/>
       </section>
 
-      <section id="skills" className='snap-center'>
+      <section id="skills" className=''>
         <Skills skills={skills}/>
       </section>
 
-      <section id="projects" className='snap-center'>
+      <section id="projects" className=''>
         <Projects projects={projects}/>
       </section>
 
-      <section id="contact" className='snap-start'>
+      <section id="contact" className=''>
         <ContactMe />
       </section>
 

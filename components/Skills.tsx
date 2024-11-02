@@ -13,16 +13,14 @@ function Skills({ skills }: Props) {
   return (
     <div
       ref={ref}
-      className={`flex relative flex-col text-center md:text-left xl:flex-row max-w-[2000px] px-5 xl:px-10 h-screen justify-center xl:space-y-0 mx-auto items-center transition-opacity duration-150 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}>
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-grey text-2xl">
+      className={` px-5 lg:px-10 py-10 4xl:py-20 mx-auto max-w-6xl transition-opacity duration-150`}>
+      <h3 className="uppercase text-center tracking-[20px] text-grey text-2xl">
         Skills
       </h3>
-      <h3 className="absolute top-36 uppercase tracking-[3px] text-grey text-sm">
+      <h3 className="mt-5 uppercase text-center tracking-[3px] text-grey text-sm">
         Hover over a skill for current proficiency
       </h3>
-      <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 top-60 absolute gap-4">
+      <div className="ps-5 md:ps-10 mt-10 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-8 gap-4">
         {skills?.slice(0, skills.length / 2).map((skill) => (
           <Skill
             key={skill._id}

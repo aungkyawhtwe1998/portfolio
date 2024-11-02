@@ -2,6 +2,7 @@ import React from "react";
 import { Skill as SkillType } from "../typings";
 import { urlFor } from "../sanity";
 import useIntersectionObserver from "../hooks/useIntersectionObserver"; // Adjust the import path as needed
+import Image from "next/image";
 
 type Props = {
   directionLeft?: boolean;
@@ -15,7 +16,10 @@ function Skill({ skill, directionLeft }: Props) {
     <div
       ref={ref}
       className="group relative flex cursor-pointer">
-      <img
+      <Image
+        width={80}
+        height={80}
+        priority
         className={`rounded-full border-2 p-2 border-grey object-cover w-20 h-20 xl:w-20 xl:h-20 filter group-hover:grayscale transition duration-300 ease-in-out ${
           isVisible
             ? "translate-x-0 opacity-100"
